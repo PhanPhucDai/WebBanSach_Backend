@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @RepositoryRestResource(path = "nguoi-dung")
 public interface NguoiDungRespository extends JpaRepository<NguoiDung, Integer> {
+    boolean existsByTenDangNhap(String tenDangNhap);
+    boolean existsByEmail(String email);
+    public NguoiDung findByTenDangNhap(String tenDangnhap);
+    public NguoiDung findByEmail(String email);
 }

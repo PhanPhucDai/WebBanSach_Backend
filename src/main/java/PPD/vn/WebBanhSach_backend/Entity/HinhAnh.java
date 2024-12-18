@@ -16,7 +16,7 @@ public class HinhAnh {
     private boolean laIcons;
     @Column(name = "duong_dan")
     private String duongDan;
-    @Column(name = "du_Lieu_Anh")
+    @Column(name = "du_Lieu_Anh", columnDefinition = "NVARCHAR(MAX)")
     @Lob
     private String duLieuAnh;
     @ManyToOne(

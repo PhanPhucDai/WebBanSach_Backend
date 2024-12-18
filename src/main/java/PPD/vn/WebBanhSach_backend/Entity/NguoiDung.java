@@ -30,6 +30,10 @@ public class NguoiDung {
     private String diaChiMuaHang;
     @Column(name = "dia_chi_giao_hang")
     private String diaChiGiaoHang;
+    @Column(name = "isKichHoat")
+    private boolean isKichHoat;
+    @Column(name = "maKichHoat")
+    private String maKichHoat;
 
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -55,7 +59,7 @@ public class NguoiDung {
     )
     private List<SachYeuThich> danhSachSachYeuThich;
     @ManyToMany(
-            fetch=FetchType.LAZY
+            fetch=FetchType.EAGER
             ,cascade = {
             CascadeType.DETACH,
             CascadeType.PERSIST,

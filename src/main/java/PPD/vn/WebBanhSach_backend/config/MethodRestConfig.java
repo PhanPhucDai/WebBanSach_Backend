@@ -13,10 +13,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 @Configuration
 public class MethodRestConfig implements RepositoryRestConfigurer {
 //
-//    private String url= "http://localhost:8080";
+//    private String url= "http://localhost:3000";
 //    @Autowired
 //    private EntityManager entityManager;
-//    //Cau hinh tuy cap ngan cac httpMetho
+//   // Cau hinh tuy cap ngan cac httpMetho
 //    @Override
 //    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 //        HttpMethod[] chanCacPhuongThuc = {
@@ -27,32 +27,26 @@ public class MethodRestConfig implements RepositoryRestConfigurer {
 //        };
 //        /*
 //        -Expose ids
-//        -cho phep id khi tra ve json
-//        config.exposeIdsFor(TheLoai.class);
+//        -cho phep id khi tra ve json  config.exposeIdsFor(TheLoai.class);
 //         */
+//
+//
 //        //disibleHttpMethods(TheLoai.class,config,chanCacPhuongThuc);
 //
 //
-//
+//        cors.addMapping("/**")
+//                .allowedOrigins(url)
+//                .allowedMethods("GET","POST","PUT","DELETE");
 //
 //
 //            config.exposeIdsFor(entityManager.getMetamodel().getEntities().stream()
 //                    .map(EntityType::getJavaType)  // Sử dụng EntityType để lấy class của entity
 //                    .toArray(Class[]::new));  // Expose the IDs of specific entities
-//
-//
 //    }
-//    private void disibleHttpMethods(Class c,
-//                                 RepositoryRestConfiguration config
-//                                 ,HttpMethod[] method
-//    ){
+//    private void disibleHttpMethods(Class c, RepositoryRestConfiguration config ,HttpMethod[] method ){
 //        config.getExposureConfiguration().forDomainType(c)
 //                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(method))
 //                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(method ));
-//
-//
-//
-//
 //    }
 
 }
