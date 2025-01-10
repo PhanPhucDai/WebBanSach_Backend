@@ -26,7 +26,7 @@ public class JWTService {
     public static final String select="938IHH2HWE0FFH08EWCB8WCWEH8T2E9VSVN00384GBP9Q38VBKFDR0BVEV8E989V85BLSBG485GRG0ABF23REF4W6345324TEWAF3F ";
     @Autowired
     private NguoiDungRespository nguoiDungService;
-    //taoj JWT dựa trên tên đăng nhập
+    //tao JWT dựa trên tên đăng nhập
     public String generateToken(String tenDangNhap) {
         Map<String, Object> claims = new HashMap<>();
         NguoiDung nguoiDung = nguoiDungService.findByTenDangNhap(tenDangNhap);
@@ -44,6 +44,7 @@ public class JWTService {
                    isStaff = true;
                }
                if(q.getTenQuyen().equals("User")){
+
                    isUser = true;
                }
            }
@@ -51,6 +52,9 @@ public class JWTService {
         claims.put("isAdmin", isAdmin);
         claims.put("isStaff", isStaff);
         claims.put("isUser", isUser);
+        claims.put("nameUser", nguoiDung.getTen());
+        claims.put("idUser", nguoiDung.getMaNguoiDung());
+
         return createToken(claims, tenDangNhap);
     }
 

@@ -5,19 +5,23 @@ public class Endpoints {
 
     public  static  final String[] PUBLIC_GET_ENPOINT= {
             "/sach"
+            ,"/the-loai/**"
+            ,"/"
             ,"/sach/**"
-            ,"/hinh-anh"
+            ,"/chi-tiet-gio-hang/**"
             ,"/hinh-anh/**"
-            ,"/nguoi-dung"
+            ,"/nguoi-dung/**"
             ,"/nguoi-dung/search/existsByTenDangNhap"
             ,"/nguoi-dung/search/existsByEmail"
             ,"/tai-khoan/kich-hoat"
+            ,"/gio-hang/**"
 
     };
 
     public  static  final String[] PUBLIC_POST_ENPOINT_DangKi= {
             "/tai-khoan/dang-ki",
             "/tai-khoan/dang-nhap"
+            ,"/sach/them-sach"
     };
 
     public  static  final String[] ADMIN_POST_ENPOINT_DangKi= {

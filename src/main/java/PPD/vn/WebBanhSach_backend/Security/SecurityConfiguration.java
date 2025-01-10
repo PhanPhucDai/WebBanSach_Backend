@@ -57,7 +57,7 @@ public class SecurityConfiguration {
                                return corsConfig;
                            });
                });
-       security.addFilterBefore(jwTfillter, UsernamePasswordAuthenticationFilter.class);
+//       security.addFilterBefore(jwTfillter, UsernamePasswordAuthenticationFilter.class);
        security.sessionManagement((s)->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
        security.httpBasic(Customizer.withDefaults());
        security.csrf(csrf -> csrf.disable());

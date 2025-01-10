@@ -35,7 +35,6 @@ public class TaiKhoanController {
 
     @PostMapping("/dang-ki")
     public ResponseEntity<?> dangKiTaiKhoan(@Validated @RequestBody  NguoiDung nguoiDung){
-        System.out.println("email");
         ResponseEntity<?> response = taiKhoanService.dangKiNguoiDung(nguoiDung);
         return  response;
     }
@@ -52,8 +51,7 @@ public class TaiKhoanController {
     public ResponseEntity<?> dangNhap(@RequestBody LoginRequest loginRequest){
         try {
             Authentication authentication= authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-                    );
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             if(authentication.isAuthenticated()){
                 final String jwt= jwtService.generateToken(loginRequest.getUsername());
                 return ResponseEntity.ok(new JwtResponse(jwt));

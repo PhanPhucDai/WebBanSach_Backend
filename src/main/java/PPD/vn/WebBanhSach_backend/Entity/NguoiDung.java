@@ -31,13 +31,24 @@ public class NguoiDung {
     @Column(name = "dia_chi_giao_hang")
     private String diaChiGiaoHang;
     @Column(name = "isKichHoat")
-    private boolean isKichHoat;
+    private Boolean isKichHoat;
     @Column(name = "maKichHoat")
     private String maKichHoat;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "nguoiDung",
+            cascade = {  CascadeType.DETACH
+                    , CascadeType.MERGE
+                    , CascadeType.PERSIST
+                    , CascadeType.REFRESH
+            }
+    )
+
+    private List<SuDanhGia> danhSachSuDanhGia;
+    @OneToOne(
+            mappedBy = "nguoiDung",
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH
                     , CascadeType.MERGE
@@ -46,7 +57,7 @@ public class NguoiDung {
             }
     )
 
-    private List<SuDanhGia> danhSachSuDanhGia;
+    private GioHang GioHang;
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "nguoiDung",
@@ -83,6 +94,6 @@ public class NguoiDung {
                     , CascadeType.REFRESH
             }
     )
-    private List<DonHang> danhSachDioHang;
+    private List<DonHang> danhSachDonHang;
 
 }

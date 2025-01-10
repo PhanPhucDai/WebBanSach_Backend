@@ -34,7 +34,7 @@ public class TaiKhoanService {
         nguoiDung.setMatKhau(enscryptPassword);
         //Gán và gửi thông tin kích hoạt
         nguoiDung.setMaKichHoat(taoMaKichHoat());
-        nguoiDung.setKichHoat(false);
+        nguoiDung.setIsKichHoat(false);
         //lưu người dùng vào cơ sở dũ liệu
         NguoiDung nguoiDung_daDangKi = nguoiDungRespository.save(nguoiDung);
         //Gửi email cho người dùng kích hoạt
@@ -47,12 +47,12 @@ public class TaiKhoanService {
         if(nguoiDung == null){
             return ResponseEntity.badRequest().body(new ThongBaoLoi("Nguoi dùng không tồn tại"));
         }
-        if(nguoiDung.isKichHoat()){
+        if(nguoiDung.getIsKichHoat()){
             return ResponseEntity.badRequest().body(new ThongBaoLoi("Tài khoản đã đuwocj kích hoạt"));
         }
         System.out.println("nguoi dung"+ nguoiDung.getTen());
         if(maKichHoat.equals(maKichHoat)){
-            nguoiDung.setKichHoat(true);
+            nguoiDung.setIsKichHoat(true);
             nguoiDungRespository.save(nguoiDung);
             return ResponseEntity.ok().body("Đã kích hoạt thành công");
         }else{

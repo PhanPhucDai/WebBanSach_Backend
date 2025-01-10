@@ -1,5 +1,6 @@
 package PPD.vn.WebBanhSach_backend.Entity;
 
+import com.jayway.jsonpath.internal.function.numeric.Max;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -24,6 +25,8 @@ public class Sach {
     private String ISBN;
     @Column(name = "mo_ta")
     private String moTa;
+     @Column(name = "mo_ta_chi_tiet")
+    private String moTaChiTiet;
     @Column(name = "gia_niem_yet")
     private double giaNiemYet;
     @Column(name = "gia_ban")
@@ -59,6 +62,7 @@ public class Sach {
     )
     private List<HinhAnh> danhSachHinhAnh;
 
+
     @OneToMany(
             mappedBy = "sach",
             fetch = FetchType.LAZY,
@@ -85,4 +89,10 @@ public class Sach {
             }
     )
     private List<SachYeuThich> SachYeuThich;
+    @OneToMany(
+            mappedBy = "sach",
+            fetch=FetchType.LAZY
+            ,cascade = {CascadeType.ALL    })
+    private List<ChiTietGioHang> chiTietGioHangs;
+
 }

@@ -11,7 +11,7 @@ public class ChiTietDonHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_chi_tiet_don_hang")
-    private long maChiTietDonHang;
+    private int maChiTietDonHang;
     @Column(name = "so_luong")
     private int soLuong ;
     @Column(name = "gia_ban")
@@ -21,14 +21,14 @@ public class ChiTietDonHang {
                     CascadeType.PERSIST,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
-    @JoinColumn(name = "ma_sach", nullable = false)
+    @JoinColumn(name = "ma_sach", nullable = true)
     private Sach sach;
     @ManyToOne(
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE,
                     CascadeType.REFRESH})
-    @JoinColumn(name = "ma_don_hang", nullable = false)
+    @JoinColumn(name = "ma_don_hang", nullable = true)
     private DonHang donHang;
 
 
