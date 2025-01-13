@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.lang.reflect.Array;
@@ -28,6 +27,8 @@ public class SecurityConfiguration {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+
     //cấu hình mã hóa mật khẩu
     @Bean
     public DaoAuthenticationProvider authenticationProvider(NguoiDungService userService){
@@ -41,6 +42,8 @@ public class SecurityConfiguration {
        security.authorizeHttpRequests(
                configurer->configurer
                        .requestMatchers(HttpMethod.GET, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
+                       .requestMatchers(HttpMethod.PUT, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
+                       .requestMatchers(HttpMethod.POST, Endpoints.User_POST_ENPOINT_DangKi).hasAuthority("User")
                        .requestMatchers(HttpMethod.POST,Endpoints.PUBLIC_POST_ENPOINT_DangKi).permitAll()
                        .requestMatchers(HttpMethod.POST,Endpoints.ADMIN_POST_ENPOINT_DangKi).hasAuthority("Admin")
 
@@ -57,7 +60,7 @@ public class SecurityConfiguration {
                                return corsConfig;
                            });
                });
-//       security.addFilterBefore(jwTfillter, UsernamePasswordAuthenticationFilter.class);
+      //security.addFilterBefore(jwTfillter, UsernamePasswordAuthenticationFilter.class);
        security.sessionManagement((s)->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
        security.httpBasic(Customizer.withDefaults());
        security.csrf(csrf -> csrf.disable());

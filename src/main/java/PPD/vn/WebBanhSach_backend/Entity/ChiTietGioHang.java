@@ -19,19 +19,13 @@ public class ChiTietGioHang {
     private int maChiTietGioHang;
     @Column(name = "so_luong")
     private int soluong;
-    @Column(name = "gia_san_pham")
-    private double giaSanPham;
-    @Column(name = "tong_gia_san_pham")
-    private double tongGiaSanPham;
-
-
     @ManyToOne(
-            fetch =  FetchType.LAZY,
+            fetch =  FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
     private GioHang gioHang;
     @ManyToOne(
-            fetch =  FetchType.LAZY,
+            fetch =  FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
     private Sach sach;

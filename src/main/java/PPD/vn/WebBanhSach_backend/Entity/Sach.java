@@ -2,13 +2,17 @@ package PPD.vn.WebBanhSach_backend.Entity;
 
 import com.jayway.jsonpath.internal.function.numeric.Max;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "sach")
 public class Sach {

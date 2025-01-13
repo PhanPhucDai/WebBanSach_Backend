@@ -5,9 +5,11 @@ public class Endpoints {
 
     public  static  final String[] PUBLIC_GET_ENPOINT= {
             "/sach"
+            ,"/gio-hang/them-so-luong"
             ,"/the-loai/**"
             ,"/"
             ,"/sach/**"
+            ,"/chi-tiet-gio-hang"
             ,"/chi-tiet-gio-hang/**"
             ,"/hinh-anh/**"
             ,"/nguoi-dung/**"
@@ -26,5 +28,10 @@ public class Endpoints {
 
     public  static  final String[] ADMIN_POST_ENPOINT_DangKi= {
             "/sach"
+    };
+
+    public  static  final String[] User_POST_ENPOINT_DangKi= {
+
+
     };
 }
