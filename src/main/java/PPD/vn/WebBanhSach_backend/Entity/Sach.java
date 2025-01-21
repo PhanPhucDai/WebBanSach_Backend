@@ -96,7 +96,7 @@ public class Sach {
     @OneToMany(
             mappedBy = "sach",
             fetch=FetchType.LAZY
-            ,cascade = {CascadeType.ALL    })
+            ,cascade = {CascadeType.MERGE    })
     private List<ChiTietGioHang> chiTietGioHangs;
 
 }

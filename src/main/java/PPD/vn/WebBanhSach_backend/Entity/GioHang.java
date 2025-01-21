@@ -20,10 +20,10 @@ public class GioHang {
 
 
     @OneToOne(cascade = { CascadeType.ALL})
-    @JoinColumn(name = "ma_nguoi_dung", nullable = false)
+    @JoinColumn(name = "ma_nguoi_dung")
     private NguoiDung nguoiDung;
 
-    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "gioHang", fetch =  FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE},mappedBy = "gioHang", fetch =  FetchType.LAZY)
     private List<ChiTietGioHang> chiTietGioHang;
 
 

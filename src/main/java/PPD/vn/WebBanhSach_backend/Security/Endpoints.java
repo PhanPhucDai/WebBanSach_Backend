@@ -24,6 +24,7 @@ public class Endpoints {
             "/tai-khoan/dang-ki",
             "/tai-khoan/dang-nhap"
             ,"/sach/them-sach"
+            ,"/gio-hang/**"
     };
 
     public  static  final String[] ADMIN_POST_ENPOINT_DangKi= {

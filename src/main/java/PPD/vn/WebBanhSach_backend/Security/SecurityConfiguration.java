@@ -45,15 +45,15 @@ public class SecurityConfiguration {
                        .requestMatchers(HttpMethod.PUT, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
                        .requestMatchers(HttpMethod.POST, Endpoints.User_POST_ENPOINT_DangKi).hasAuthority("User")
                        .requestMatchers(HttpMethod.POST,Endpoints.PUBLIC_POST_ENPOINT_DangKi).permitAll()
+                       .requestMatchers(HttpMethod.DELETE,Endpoints.PUBLIC_POST_ENPOINT_DangKi).permitAll()
                        .requestMatchers(HttpMethod.POST,Endpoints.ADMIN_POST_ENPOINT_DangKi).hasAuthority("Admin")
-
-
-       );
+);
        security.cors(
                cors->{
                    cors.configurationSource(
                            request -> {
                                CorsConfiguration corsConfig= new CorsConfiguration();
+
                                corsConfig.addAllowedOrigin(Endpoints.frontEnd_host);
                                corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
                                corsConfig.addAllowedHeader("*");
