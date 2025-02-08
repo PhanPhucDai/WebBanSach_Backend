@@ -24,6 +24,7 @@ public class GioHangService {
     private SachRespository sachRespository;
     @Autowired
     private GioHangRespository gioHangRespository;
+
     @Transactional
     public int addItemInCart(ChiTietGioHangDTO chiTietGioHang){
         int rs=0;
@@ -89,23 +90,43 @@ public class GioHangService {
         try {
              GioHang gioHang = gioHangRespository.findById(chiTietGioHang.getGioHang().getMaGioHang())
                     .orElseThrow(() -> new RuntimeException("Không thể tìm thấy giỏ hàng"));
-            Sach sach = sachRespository.findById(chiTietGioHang.getSach().getMaSach())
+             Sach sach = sachRespository.findById(chiTietGioHang.getSach().getMaSach())
                     .orElseThrow(() -> new RuntimeException("Không thể tìm thấy sách"));
              Optional<ChiTietGioHang> existingItem = chiTietGioHangRepository.findByGioHangAndSach(gioHang, sach);
 
             if (existingItem.isPresent()) {
-                 ChiTietGioHang item = existingItem.get();
+                ChiTietGioHang item = existingItem.get();
                 item.setSoluong(item.getSoluong() + chiTietGioHang.getSoluong());
+                item.setIsSelected(0);
                 chiTietGioHangRepository.save(item);
             } else {
                  chiTietGioHangRepository.save(chiTietGioHang);
             }
-
             return 1; // Thành công
         } catch (Exception exception){
             return 0; // Lỗi
         }
     }
+    @Transactional
+    public int isSelected(ChiTietGioHangDTO chiTietGioHangDTO){
+        Optional<GioHang> gioHang= gioHangRespository.findById(chiTietGioHangDTO.getGioHang());
+        Optional<Sach> sach = sachRespository.findById(chiTietGioHangDTO.getSach());
 
+            if(sach.isPresent() && gioHang.isPresent()  ){
+                ChiTietGioHang chiTietGioHang=chiTietGioHangRepository
+                        .findByGioHangAndSach(gioHang.get(),sach.get())
+                        .orElseThrow(()->new RuntimeException("Sản phẩm không tìm thấy ") );
+                if(sach.get().getSoLuong() >= chiTietGioHangDTO.getSoluong() && chiTietGioHang.getIsSelected() == 0){
+                    chiTietGioHang.setIsSelected(1);
+                    chiTietGioHangRepository.save(chiTietGioHang);
+                    return 1;
+                }else if(sach.get().getSoLuong() >= chiTietGioHangDTO.getSoluong()  && chiTietGioHang.getIsSelected() == 1){
+                    chiTietGioHang.setIsSelected(0);
+                    chiTietGioHangRepository.save(chiTietGioHang);
+                    return 1;
+                }
+            }
+        return 0;
+    }
 
 }

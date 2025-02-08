@@ -7,12 +7,12 @@ import PPD.vn.WebBanhSach_backend.Entity.NguoiDung;
 import PPD.vn.WebBanhSach_backend.Rest.ChiTietGioHangRepository;
 import PPD.vn.WebBanhSach_backend.Rest.GioHangRespository;
 import PPD.vn.WebBanhSach_backend.Rest.NguoiDungRespository;
+import PPD.vn.WebBanhSach_backend.Rest.SachRespository;
 import PPD.vn.WebBanhSach_backend.Service.GioHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +30,8 @@ public class GioHangController {
     private NguoiDungRespository nguoiDungRespository;
     @Autowired
     private GioHangRespository gioHangRespository;
+    @Autowired
+    private SachRespository sachRespository;
 
     @PutMapping("/them-so-luong")
     public ResponseEntity<?> themSoLuong(@Validated @RequestBody ChiTietGioHangDTO chiTietGioHang){
@@ -91,7 +93,9 @@ public class GioHangController {
                         chiTietGioHang1.getMaChiTietGioHang()
                         , chiTietGioHang1.getSach().getMaSach()
                         , chiTietGioHang1.getGioHang().getMaGioHang()
-                        , chiTietGioHang1.getSoluong());
+                        , chiTietGioHang1.getSoluong()
+                        , chiTietGioHang1.getIsSelected()
+                );
                 listChiTietGioHangDTO.add(chiTietGioHangDTO);
 
             }
@@ -101,5 +105,16 @@ public class GioHangController {
             e.printStackTrace();
         }
         return ResponseEntity.badRequest().body("Không thể thêm sản phẩm này");
+    }
+
+    @PostMapping("/chon-san-pham-thanh-toan")
+    public ResponseEntity<?> isSelected(@Validated @RequestBody ChiTietGioHangDTO chiTietGioHangDTO){
+        System.out.println("Có vào");
+        if(gioHangService.isSelected(chiTietGioHangDTO)==0){
+            System.out.println("Mặt hàng này đã hết. Vui lòng xoá ra khỏi cửa hàng");
+            return ResponseEntity.badRequest().body("Mặt hàng này đã hết. Vui lòng xoá ra khỏi cửa hàng");
+        }
+        System.out.println("ok");
+        return ResponseEntity.ok("Sản phẩm đã được chọn");
     }
 }
