@@ -1,5 +1,7 @@
 package PPD.vn.WebBanhSach_backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -56,8 +58,7 @@ public class NguoiDung {
                     , CascadeType.REFRESH
             }
     )
-
-    private GioHang GioHang;
+     private GioHang gioHang;
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "nguoiDung",

@@ -19,7 +19,7 @@ public class ChiTietGioHang {
     private int maChiTietGioHang;
     @Column(name = "so_luong")
     private int soluong;
-    @Column(name = "isSelected")
+    @Column(name = "is_selected")
     private int isSelected;
     @ManyToOne(
             fetch =  FetchType.EAGER

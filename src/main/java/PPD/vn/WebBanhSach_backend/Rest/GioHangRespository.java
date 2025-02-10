@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @RepositoryRestResource(path = "gio-hang")
 public interface GioHangRespository extends JpaRepository<GioHang, Integer> {
-}
+ }
 

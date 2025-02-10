@@ -10,6 +10,7 @@ import PPD.vn.WebBanhSach_backend.Rest.NguoiDungRespository;
 import PPD.vn.WebBanhSach_backend.Rest.SachRespository;
 import PPD.vn.WebBanhSach_backend.Service.GioHangService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +81,7 @@ public class GioHangController {
     }
 
     @PostMapping("/San-pham-gio-hang")
-    public ResponseEntity<?> themSanPhamGioHang(@Validated @RequestBody Map<String, Integer> data){
+    public ResponseEntity<?> laySanPhamGioHang(@Validated @RequestBody Map<String, Integer> data){
         int maNguoiDung = data.get("maNguoiDung");
         Optional<NguoiDung> nguoiDung= nguoiDungRespository.findById(maNguoiDung);
         GioHang gioHang = nguoiDung.get().getGioHang();
@@ -110,11 +111,44 @@ public class GioHangController {
     @PostMapping("/chon-san-pham-thanh-toan")
     public ResponseEntity<?> isSelected(@Validated @RequestBody ChiTietGioHangDTO chiTietGioHangDTO){
         System.out.println("Có vào");
-        if(gioHangService.isSelected(chiTietGioHangDTO)==0){
+        int rs= gioHangService.isSelected(chiTietGioHangDTO);
+        if(rs == 0 ){
             System.out.println("Mặt hàng này đã hết. Vui lòng xoá ra khỏi cửa hàng");
-            return ResponseEntity.badRequest().body("Mặt hàng này đã hết. Vui lòng xoá ra khỏi cửa hàng");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mặt hàng này đã hết. Vui lòng xoá ra khỏi cửa hàng");
+        }else if(rs == 2){
+            System.out.println("Số lượng sản phẩm không đủ chúng tôi đã giảm số lượng");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Số lượng sản phẩm không đủ chúng tôi đã giảm số lượng");
         }
-        System.out.println("ok");
-        return ResponseEntity.ok("Sản phẩm đã được chọn");
+            System.out.println("Sản phẩm đax được chọn");
+            return ResponseEntity.ok("Sản phẩm đã được chọn");
+
+    }
+
+    @GetMapping("/Chi-tiet-gio-hang/isSelected")
+    public ResponseEntity<?> getItemIsSelected(@Validated @RequestParam("maNguoiDung")  int maNguoiDung){
+
+        Optional<NguoiDung> nguoiDung= nguoiDungRespository.findById(maNguoiDung);
+        GioHang gioHang = nguoiDung.get().getGioHang();
+        List<ChiTietGioHang> chiTietGioHang = chiTietGioHangRepository.findByGioHang(gioHang);
+        try {
+            List<ChiTietGioHangDTO> listChiTietGioHangDTO = new ArrayList<>();
+            for(ChiTietGioHang chiTietGioHang1: chiTietGioHang) {
+                if(chiTietGioHang1.getIsSelected() == 1){
+                    ChiTietGioHangDTO chiTietGioHangDTO
+                            = new ChiTietGioHangDTO(
+                            chiTietGioHang1.getMaChiTietGioHang()
+                            , chiTietGioHang1.getSach().getMaSach()
+                            , chiTietGioHang1.getGioHang().getMaGioHang()
+                            , chiTietGioHang1.getSoluong()
+                            , chiTietGioHang1.getIsSelected()
+                    );
+                    listChiTietGioHangDTO.add(chiTietGioHangDTO);
+                }
+            }
+            return ResponseEntity.ok(listChiTietGioHangDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.badRequest().body("Không thể thêm sản phẩm này");
     }
 }

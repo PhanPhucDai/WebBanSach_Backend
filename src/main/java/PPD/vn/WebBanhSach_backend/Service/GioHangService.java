@@ -3,15 +3,18 @@ package PPD.vn.WebBanhSach_backend.Service;
 import PPD.vn.WebBanhSach_backend.DTO.ChiTietGioHangDTO;
 import PPD.vn.WebBanhSach_backend.Entity.ChiTietGioHang;
 import PPD.vn.WebBanhSach_backend.Entity.GioHang;
+import PPD.vn.WebBanhSach_backend.Entity.NguoiDung;
 import PPD.vn.WebBanhSach_backend.Entity.Sach;
 import PPD.vn.WebBanhSach_backend.Rest.ChiTietGioHangRepository;
 import PPD.vn.WebBanhSach_backend.Rest.GioHangRespository;
+import PPD.vn.WebBanhSach_backend.Rest.NguoiDungRespository;
 import PPD.vn.WebBanhSach_backend.Rest.SachRespository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +27,8 @@ public class GioHangService {
     private SachRespository sachRespository;
     @Autowired
     private GioHangRespository gioHangRespository;
-
+    @Autowired
+    private NguoiDungRespository nguoiDungRespository;
     @Transactional
     public int addItemInCart(ChiTietGioHangDTO chiTietGioHang){
         int rs=0;
@@ -112,19 +116,35 @@ public class GioHangService {
         Optional<GioHang> gioHang= gioHangRespository.findById(chiTietGioHangDTO.getGioHang());
         Optional<Sach> sach = sachRespository.findById(chiTietGioHangDTO.getSach());
 
-            if(sach.isPresent() && gioHang.isPresent()  ){
+            if(sach.isPresent() && gioHang.isPresent()){
+
                 ChiTietGioHang chiTietGioHang=chiTietGioHangRepository
                         .findByGioHangAndSach(gioHang.get(),sach.get())
                         .orElseThrow(()->new RuntimeException("Sản phẩm không tìm thấy ") );
-                if(sach.get().getSoLuong() >= chiTietGioHangDTO.getSoluong() && chiTietGioHang.getIsSelected() == 0){
-                    chiTietGioHang.setIsSelected(1);
-                    chiTietGioHangRepository.save(chiTietGioHang);
-                    return 1;
-                }else if(sach.get().getSoLuong() >= chiTietGioHangDTO.getSoluong()  && chiTietGioHang.getIsSelected() == 1){
-                    chiTietGioHang.setIsSelected(0);
-                    chiTietGioHangRepository.save(chiTietGioHang);
-                    return 1;
+                if(sach.get().getSoLuong() > 0){
+                    System.out.println("còn sách");
+
+                    if(sach.get().getSoLuong() < chiTietGioHangDTO.getSoluong() && chiTietGioHang.getIsSelected() == 0){
+                        chiTietGioHang.setSoluong(sach.get().getSoLuong());
+                        chiTietGioHang.setIsSelected(1);
+                        chiTietGioHangRepository.save(chiTietGioHang);
+                        return 2;
+                    }else if(sach.get().getSoLuong() >= chiTietGioHangDTO.getSoluong() && chiTietGioHang.getIsSelected() == 0){
+                        chiTietGioHang.setIsSelected(1);
+                        chiTietGioHangRepository.save(chiTietGioHang);
+                        return 1;
+                    }else if(sach.get().getSoLuong() >= chiTietGioHangDTO.getSoluong()  && chiTietGioHang.getIsSelected() == 1){
+                        chiTietGioHang.setIsSelected(0);
+                        chiTietGioHangRepository.save(chiTietGioHang);
+                        return 1;
+                    }else if(sach.get().getSoLuong() <= chiTietGioHangDTO.getSoluong()  && chiTietGioHang.getIsSelected() == 1){
+                        chiTietGioHang.setSoluong(sach.get().getSoLuong());
+                        chiTietGioHang.setIsSelected(0);
+                        chiTietGioHangRepository.save(chiTietGioHang);
+                        return 2;
+                    }
                 }
+
             }
         return 0;
     }
