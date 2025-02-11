@@ -28,15 +28,21 @@ public class NguoiDung {
     private String email;
     @Column(name = "so_dien_thoai")
     private String soDienThoai;
-    @Column(name = "dia_chi_mua_hang")
-    private String diaChiMuaHang;
-    @Column(name = "dia_chi_giao_hang")
-    private String diaChiGiaoHang;
     @Column(name = "isKichHoat")
     private Boolean isKichHoat;
     @Column(name = "maKichHoat")
     private String maKichHoat;
-
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "nguoiDung",
+            cascade = {
+                    CascadeType.DETACH
+                    , CascadeType.MERGE
+                    , CascadeType.PERSIST
+                    , CascadeType.REFRESH
+            }
+    )
+    private List<DiaChiGiaoHang> diaChiGiaoHang;
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "nguoiDung",

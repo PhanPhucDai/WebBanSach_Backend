@@ -15,7 +15,7 @@ import java.util.List;
 public class ChiTietGioHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     @Column(name="ma_chi_tiet_gio_hang")
+    @Column(name="ma_chi_tiet_gio_hang")
     private int maChiTietGioHang;
     @Column(name = "so_luong")
     private int soluong;

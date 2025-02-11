@@ -122,9 +122,7 @@ public class GioHangService {
                         .findByGioHangAndSach(gioHang.get(),sach.get())
                         .orElseThrow(()->new RuntimeException("Sản phẩm không tìm thấy ") );
                 if(sach.get().getSoLuong() > 0){
-                    System.out.println("còn sách");
-
-                    if(sach.get().getSoLuong() < chiTietGioHangDTO.getSoluong() && chiTietGioHang.getIsSelected() == 0){
+                     if(sach.get().getSoLuong() < chiTietGioHangDTO.getSoluong() && chiTietGioHang.getIsSelected() == 0){
                         chiTietGioHang.setSoluong(sach.get().getSoLuong());
                         chiTietGioHang.setIsSelected(1);
                         chiTietGioHangRepository.save(chiTietGioHang);

@@ -143,8 +143,7 @@ public class GioHangController {
                             , chiTietGioHang1.getIsSelected()
                     );
                     listChiTietGioHangDTO.add(chiTietGioHangDTO);
-                }
-            }
+                }}
             return ResponseEntity.ok(listChiTietGioHangDTO);
         } catch (Exception e) {
             e.printStackTrace();
