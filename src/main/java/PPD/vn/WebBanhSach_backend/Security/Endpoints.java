@@ -6,6 +6,7 @@ public class Endpoints {
     public  static  final String[] PUBLIC_GET_ENPOINT= {
             "/sach"
             ,"/gio-hang/them-so-luong"
+            ,"/create"
             ,"/the-loai/**"
             ,"/"
             ,"/xoa-dia-chi"
