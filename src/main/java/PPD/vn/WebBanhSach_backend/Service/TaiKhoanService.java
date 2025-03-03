@@ -1,10 +1,11 @@
 package PPD.vn.WebBanhSach_backend.Service;
 
 
+import PPD.vn.WebBanhSach_backend.Entity.GioHang;
 import PPD.vn.WebBanhSach_backend.Entity.NguoiDung;
 import PPD.vn.WebBanhSach_backend.Entity.ThongBaoLoi;
+import PPD.vn.WebBanhSach_backend.Rest.GioHangRespository;
 import PPD.vn.WebBanhSach_backend.Rest.NguoiDungRespository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,8 @@ public class TaiKhoanService {
     private NguoiDungRespository nguoiDungRespository;
     @Autowired
     private EmailServiceImp emailServiceImp;
+    @Autowired
+    private GioHangRespository gioHangRespository;
 
 
     public ResponseEntity<?> dangKiNguoiDung(NguoiDung nguoiDung){
@@ -37,6 +40,9 @@ public class TaiKhoanService {
         nguoiDung.setIsKichHoat(false);
         //lưu người dùng vào cơ sở dũ liệu
         NguoiDung nguoiDung_daDangKi = nguoiDungRespository.save(nguoiDung);
+        GioHang gioHang = new GioHang();
+        gioHang.setNguoiDung(nguoiDung_daDangKi);
+        gioHangRespository.save(gioHang);
         //Gửi email cho người dùng kích hoạt
         guiEmailKichHoat(nguoiDung.getEmail(), nguoiDung.getMaKichHoat());
         return ResponseEntity.ok("Đăng kí thành công");

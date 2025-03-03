@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.lang.reflect.Array;
@@ -43,6 +44,10 @@ public class SecurityConfiguration {
                configurer->configurer
                        .requestMatchers(HttpMethod.GET, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
                        .requestMatchers(HttpMethod.PUT, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
+                       .requestMatchers(HttpMethod.POST, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
+                       .requestMatchers(HttpMethod.POST, "/save-dia-chi").permitAll()
+                       .requestMatchers(HttpMethod.DELETE, Endpoints.PUBLIC_GET_ENPOINT).permitAll()
+
                        .requestMatchers(HttpMethod.POST, Endpoints.User_POST_ENPOINT_DangKi).hasAuthority("User")
                        .requestMatchers(HttpMethod.POST,Endpoints.PUBLIC_POST_ENPOINT_DangKi).permitAll()
                        .requestMatchers(HttpMethod.DELETE,Endpoints.PUBLIC_POST_ENPOINT_DangKi).permitAll()
@@ -53,14 +58,13 @@ public class SecurityConfiguration {
                    cors.configurationSource(
                            request -> {
                                CorsConfiguration corsConfig= new CorsConfiguration();
-
                                corsConfig.addAllowedOrigin(Endpoints.frontEnd_host);
                                corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
                                corsConfig.addAllowedHeader("*");
                                return corsConfig;
                            });
                });
-      //security.addFilterBefore(jwTfillter, UsernamePasswordAuthenticationFilter.class);
+      security.addFilterBefore(jwTfillter, UsernamePasswordAuthenticationFilter.class);
        security.sessionManagement((s)->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
        security.httpBasic(Customizer.withDefaults());
        security.csrf(csrf -> csrf.disable());

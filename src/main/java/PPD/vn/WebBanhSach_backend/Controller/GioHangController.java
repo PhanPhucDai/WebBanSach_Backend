@@ -36,6 +36,8 @@ public class GioHangController {
 
     @PutMapping("/them-so-luong")
     public ResponseEntity<?> themSoLuong(@Validated @RequestBody ChiTietGioHangDTO chiTietGioHang){
+        System.out.print(chiTietGioHang.getSach()+""+chiTietGioHang.getGioHang());
+
         if(gioHangService.addItemInCart(chiTietGioHang)==1){
            return ResponseEntity.ok().body("");
        }
@@ -74,6 +76,8 @@ public class GioHangController {
 
     @PostMapping("/them-san-pham-gio-hang")
     public ResponseEntity<?> themSanPhamGioHang(@Validated @RequestBody ChiTietGioHang chiTietGioHang){
+        System.out.print(chiTietGioHang.getSach()+""+chiTietGioHang.getGioHang());
+
         if(gioHangService.themSanPhamGioHang(chiTietGioHang)==1){
             return ResponseEntity.ok().body("Đã thêm thành công");
         }

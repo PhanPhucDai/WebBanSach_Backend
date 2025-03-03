@@ -23,10 +23,18 @@ public class DiaChiGiaoHang {
     @Column(name = "chiTietDiachi")
     private String chiTietDiachi;
     @Column(name = "isSelected")
-    private String isSelected;
+    private String isSelected = "F";
     @ManyToOne(
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private NguoiDung nguoiDung;
 
+    public DiaChiGiaoHang(String tenTinh, String tenHuyen, String tenXa, String chiTietDiachi, String isSelected, NguoiDung nguoiDung) {
+        this.tenTinh = tenTinh;
+        this.tenHuyen = tenHuyen;
+        this.tenXa = tenXa;
+        this.chiTietDiachi = chiTietDiachi;
+        this.isSelected = isSelected;
+        this.nguoiDung = nguoiDung;
+    }
 }

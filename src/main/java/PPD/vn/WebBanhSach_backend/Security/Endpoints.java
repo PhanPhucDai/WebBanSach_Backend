@@ -8,6 +8,11 @@ public class Endpoints {
             ,"/gio-hang/them-so-luong"
             ,"/the-loai/**"
             ,"/"
+            ,"/xoa-dia-chi"
+            ,"/save-dia-chi",
+            "/update-password",
+            "/update-dia-chi",
+            "/update-user"
             ,"/sach/**"
             ,"/chi-tiet-gio-hang"
             ,"/chi-tiet-gio-hang/**"

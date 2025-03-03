@@ -26,9 +26,7 @@ public class JWTfillter extends OncePerRequestFilter {
     @Autowired
     private NguoiDungService nguoiDungService;
 
-    public JWTfillter() {
-
-    }
+    public JWTfillter() {}
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
